@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Monitoring UKS - Liquid Glass iOS</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-sans min-h-screen text-slate-800 antialiased selection:bg-pink-400 selection:text-white overflow-x-hidden relative">
+
+    <!-- Ambient Glowing Blobs untuk Efek Pembiasan Kaca -->
+    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-400/40 rounded-full blur-[130px] pointer-events-none animate-pulse"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-rose-400/30 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="fixed top-[40%] right-[20%] w-[350px] h-[350px] bg-fuchsia-300/30 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Container Utama SPA -->
+    <div id="app" class="min-h-screen flex flex-col md:flex-row relative z-10">
+        <!-- Sidebar Navigation (Liquid Glass Style) -->
+        <aside id="sidebar-nav" class="hidden md:flex flex-col w-72 p-6 justify-between min-h-screen relative z-20 transition-all duration-500">
+            <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col">
+                <!-- Logo UKS -->
+                <div class="flex items-center gap-3.5 pb-5 border-b border-white/30">
+                    <div class="liquid-badge p-3 text-white rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-black text-xl tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
+                        <p class="text-[10px] text-pink-700/80 font-bold uppercase tracking-widest">Monitoring System</p>
+                    </div>
+                </div>
+
+                <!-- Navigasi Utama -->
+                <nav class="space-y-3 flex-1">
+                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-house w-5 text-center text-pink-600"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="navigateTo('form-rekam-medis')" id="nav-form-rekam-medis" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-file-medical w-5 text-center text-pink-600"></i>
+                        <span>Rekam Medis</span>
+                    </button>
+                    <button onclick="navigateTo('stok-obat')" id="nav-stok-obat" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-pills w-5 text-center text-pink-600"></i>
+                        <span>Data Obat</span>
+                    </button>
+                    <button onclick="navigateTo('riwayat-kesehatan')" id="nav-riwayat-kesehatan" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-notes-medical w-5 text-center text-pink-600"></i>
+                        <span>Riwayat Kesehatan</span>
+                    </button>
+                </nav>
+
+                <!-- Tombol Logout -->
+                <div class="pt-4 border-t border-white/30">
+                    <button onclick="handleLogout()" class="liquid-btn-danger w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold text-rose-700">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama -->
+        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto min-h-screen flex flex-col justify-between">
+            <div id="page-container" class="max-w-7xl mx-auto w-full"></div>
+        </main>
+    </div>
+
+    <!-- Notification Toast Modal (iOS Banner Alert) -->
+    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-180%] opacity-0 transition-all duration-500 ease-spring flex items-center gap-3.5 px-6 py-4 rounded-2xl glass-card shadow-2xl pointer-events-none">
+        <div id="toast-icon" class="text-2xl"></div>
+        <div id="toast-message" class="text-xs font-bold text-slate-800 tracking-wide"></div>
+    </div>
+
+    <!-- Modul JavaScript -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

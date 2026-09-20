@@ -1,0 +1,175 @@
+/* Background & Fonts */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 35%, #fbcfe8 70%, #f472b6 100%);
+    background-attachment: fixed;
+}
+
+/* ==========================================================================
+   LIQUID GLASS & VISIONOS FROSTED GLASS EFFECTS
+   ========================================================================== */
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(25px) saturate(190%);
+    -webkit-backdrop-filter: blur(25px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 
+        0 20px 50px -10px rgba(219, 39, 119, 0.12),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px 0 rgba(190, 24, 93, 0.05);
+}
+
+.glass-sidebar {
+    background: rgba(255, 241, 245, 0.4);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.15);
+}
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(244, 114, 182, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+.glass-input:focus {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #db2777;
+    box-shadow: 
+        0 0 0 4px rgba(219, 39, 119, 0.2),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   LIQUID BUTTONS & iOS PRESS ANIMATIONS (REALISTIC SPRING PHYSICS)
+   ========================================================================== */
+
+.liquid-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 
+        0 4px 15px -3px rgba(190, 24, 93, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.liquid-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.liquid-btn:hover {
+    background: rgba(255, 255, 255, 0.65);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+        0 10px 25px -5px rgba(219, 39, 119, 0.2),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+}
+
+.liquid-btn:hover::before {
+    opacity: 0.4;
+}
+
+/* iOS Gel Press Down Effect */
+.liquid-btn:active, .liquid-btn-primary:active, .liquid-btn-danger:active {
+    transform: scale(0.93) translateY(2px) !important;
+    box-shadow: 
+        0 2px 8px -2px rgba(190, 24, 93, 0.3),
+        inset 0 3px 6px 0 rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1) !important;
+}
+
+/* Primary Pink Liquid Button */
+.liquid-btn-primary {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.85) 0%, rgba(190, 24, 93, 0.9) 100%);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    box-shadow: 
+        0 8px 25px -5px rgba(190, 24, 93, 0.4),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.liquid-btn-primary:hover {
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.95) 0%, rgba(219, 39, 119, 0.95) 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 30px -5px rgba(190, 24, 93, 0.5);
+}
+
+/* Danger Liquid Button */
+.liquid-btn-danger {
+    background: rgba(255, 228, 230, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+    transition: all 0.3s ease;
+}
+
+.liquid-btn-danger:hover {
+    background: rgba(244, 63, 94, 0.9);
+    color: white;
+    box-shadow: 0 8px 20px -4px rgba(244, 63, 94, 0.4);
+}
+
+/* Liquid Badge Highlight */
+.liquid-badge {
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.8) 0%, rgba(190, 24, 93, 0.9) 100%);
+    box-shadow: 0 6px 15px -3px rgba(190, 24, 93, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Nav Active State */
+.nav-btn-active {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    color: #be185d !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 25px -5px rgba(190, 24, 93, 0.25) !important;
+}
+
+/* Fluid Page Entry Animation */
+.page-fade-enter {
+    animation: iosFluidIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes iosFluidIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(15px);
+        filter: blur(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(190, 24, 93, 0.25);
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(190, 24, 93, 0.5);
+}
