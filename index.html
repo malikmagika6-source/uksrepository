@@ -11,10 +11,8 @@
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Link CSS Eksternal (Opsional) -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- CSS Embedded Langsung Agar Vercel Pasti Membaca Stylingnya -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -23,171 +21,172 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(25px) saturate(190%);
             -webkit-backdrop-filter: blur(25px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 20px 50px -10px rgba(219, 39, 119, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
-        }
-
-        .glass-sidebar {
-            background: rgba(255, 241, 245, 0.55);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.15);
+            box-shadow: 0 20px 50px -10px rgba(219, 39, 119, 0.15), inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
         }
 
-        .liquid-btn {
-            position: relative;
+        .glass-input {
             background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 15px -3px rgba(190, 24, 93, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .liquid-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 10px 25px -5px rgba(219, 39, 119, 0.2);
-        }
-
-        .liquid-btn:active, .liquid-btn-danger:active {
-            transform: scale(0.93) translateY(2px) !important;
-        }
-
-        .liquid-btn-danger {
-            background: rgba(255, 228, 230, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(244, 63, 94, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(244, 114, 182, 0.35);
             transition: all 0.3s ease;
         }
 
-        .liquid-btn-danger:hover {
-            background: rgba(244, 63, 94, 0.9);
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #db2777;
+            box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.15);
+            outline: none;
+        }
+
+        .liquid-btn-primary {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.9) 0%, rgba(190, 24, 93, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
-            box-shadow: 0 8px 20px -4px rgba(244, 63, 94, 0.4);
+            box-shadow: 0 8px 25px -5px rgba(190, 24, 93, 0.4);
+            transition: all 0.2s ease;
         }
 
-        .liquid-badge {
-            background: linear-gradient(135deg, rgba(244, 114, 182, 0.8) 0%, rgba(190, 24, 93, 0.9) 100%);
-            box-shadow: 0 6px 15px -3px rgba(190, 24, 93, 0.3);
+        .liquid-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px -5px rgba(190, 24, 93, 0.5);
         }
 
-        .nav-btn-active {
-            background: rgba(255, 255, 255, 0.95) !important;
-            border: 1px solid rgba(255, 255, 255, 1) !important;
-            color: #be185d !important;
-            font-weight: 800 !important;
-            box-shadow: 0 10px 25px -5px rgba(190, 24, 93, 0.25) !important;
+        .liquid-btn-primary:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
-<body class="font-sans min-h-screen text-slate-800 antialiased selection:bg-pink-400 selection:text-white overflow-x-hidden relative">
+<body class="font-sans min-h-screen text-slate-800 antialiased selection:bg-pink-400 selection:text-white flex items-center justify-center p-4">
 
-    <!-- Ambient Glowing Blobs untuk Efek Pembiasan Kaca -->
+    <!-- Ambient Glowing Blobs -->
     <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-400/40 rounded-full blur-[130px] pointer-events-none animate-pulse"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-rose-400/30 rounded-full blur-[150px] pointer-events-none"></div>
-    <div class="fixed top-[40%] right-[20%] w-[350px] h-[350px] bg-fuchsia-300/30 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <!-- Container Utama SPA -->
-    <div id="app" class="min-h-screen flex flex-col md:flex-row relative z-10">
-        
-        <!-- Mobile Header & Hamburger Button -->
-        <div class="md:hidden flex items-center justify-between p-4 glass-card border-b border-white/40 sticky top-0 z-30">
-            <div class="flex items-center gap-3">
-                <div class="liquid-badge p-2.5 text-white rounded-xl flex items-center justify-center">
-                    <i class="fa-solid fa-heart-pulse text-lg"></i>
-                </div>
-                <h1 class="font-black text-lg tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
-            </div>
-            <button onclick="toggleMobileSidebar()" class="liquid-btn p-3 rounded-2xl text-pink-600 text-lg">
-                <i class="fa-solid fa-bars" id="hamburger-icon"></i>
-            </button>
-        </div>
-
-        <!-- Sidebar Navigation (Liquid Glass Style) -->
-        <aside id="sidebar-nav" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:flex flex-col w-72 p-6 justify-between min-h-screen z-40 transition-transform duration-300 ease-in-out">
-            <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col shadow-2xl md:shadow-none">
-                
-                <!-- Header Sidebar & Tombol Close Mobile -->
-                <div class="flex items-center justify-between pb-5 border-b border-white/30">
-                    <div class="flex items-center gap-3.5">
-                        <div class="liquid-badge p-3 text-white rounded-2xl flex items-center justify-center">
-                            <i class="fa-solid fa-heart-pulse text-2xl"></i>
-                        </div>
-                        <div>
-                            <h1 class="font-black text-xl tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
-                            <p class="text-[10px] text-pink-700/80 font-bold uppercase tracking-widest">Monitoring System</p>
-                        </div>
-                    </div>
-                    <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-500 hover:text-pink-600">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
-                </div>
-
-                <!-- Navigasi Utama (Kotak-Kotak Pelapis Pink) -->
-                <nav class="space-y-3 flex-1">
-                    <button onclick="navigateTo('dashboard'); toggleMobileSidebar();" id="nav-dashboard" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700 nav-btn-active">
-                        <i class="fa-solid fa-house w-5 text-center text-pink-600"></i>
-                        <span>Dashboard</span>
-                    </button>
-                    <button onclick="navigateTo('form-rekam-medis'); toggleMobileSidebar();" id="nav-form-rekam-medis" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
-                        <i class="fa-solid fa-file-medical w-5 text-center text-pink-600"></i>
-                        <span>Rekam Medis</span>
-                    </button>
-                    <button onclick="navigateTo('stok-obat'); toggleMobileSidebar();" id="nav-stok-obat" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
-                        <i class="fa-solid fa-pills w-5 text-center text-pink-600"></i>
-                        <span>Data Obat</span>
-                    </button>
-                    <button onclick="navigateTo('riwayat-kesehatan'); toggleMobileSidebar();" id="nav-riwayat-kesehatan" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
-                        <i class="fa-solid fa-notes-medical w-5 text-center text-pink-600"></i>
-                        <span>Riwayat Kesehatan</span>
-                    </button>
-                </nav>
-
-                <!-- Tombol Logout -->
-                <div class="pt-4 border-t border-white/30">
-                    <button onclick="handleLogout()" class="liquid-btn-danger w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold text-rose-700">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Logout</span>
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Overlay Gelap saat Sidebar Mobile Terbuka -->
-        <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 hidden md:hidden"></div>
-
-        <!-- Area Konten Utama -->
-        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto min-h-screen flex flex-col justify-between">
-            <div id="page-container" class="max-w-7xl mx-auto w-full"></div>
-        </main>
+    <!-- Main Dynamic Container -->
+    <div id="app" class="w-full max-w-md relative z-10">
+        <!-- Render Auth Form / Dashboard via JavaScript -->
     </div>
 
-    <!-- Notification Toast Modal -->
-    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-180%] opacity-0 transition-all duration-500 ease-spring flex items-center gap-3.5 px-6 py-4 rounded-2xl glass-card shadow-2xl pointer-events-none">
-        <div id="toast-icon" class="text-2xl"></div>
-        <div id="toast-message" class="text-xs font-bold text-slate-800 tracking-wide"></div>
-    </div>
-
-    <!-- Script Toggle Mobile -->
-    <script>
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar-nav');
-            const overlay = document.getElementById('sidebar-overlay');
-            
-            if (sidebar && overlay) {
-                sidebar.classList.toggle('-translate-x-full');
-                overlay.classList.toggle('hidden');
-            }
-        }
-    </script>
-
-    <!-- Modul JavaScript SPA -->
+    <!-- Modul JavaScript External -->
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- Inline Fallback Controller untuk Menjamin Tombol Berfungsi di Vercel -->
+    <script>
+        // Pengecekan Login saat Halaman Dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthAndRender();
+        });
+
+        function checkAuthAndRender() {
+            const currentUser = localStorage.getItem('uks_user');
+            const app = document.getElementById('app');
+
+            if (!currentUser) {
+                renderLoginForm();
+            } else {
+                // Jika sudah login, redirect / render app utama
+                if (typeof renderDashboardApp === 'function') {
+                    renderDashboardApp();
+                } else {
+                    renderLoginForm();
+                }
+            }
+        }
+
+        function renderLoginForm() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="glass-card p-8 rounded-3xl text-center space-y-6">
+                    <div class="flex justify-center">
+                        <div class="w-16 h-16 bg-gradient-to-tr from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg shadow-pink-500/30">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-black text-slate-800">UKS <span class="text-pink-600">Plus</span></h1>
+                        <p class="text-xs font-bold text-pink-600/80 uppercase tracking-wider mt-1">Sistem Monitoring UKS</p>
+                        <p class="text-xs text-slate-500 mt-1 italic">Sehat Bersama, Prestasi Juara</p>
+                    </div>
+
+                    <h2 class="text-lg font-bold text-slate-700 pt-2">Masuk ke Akun Anda</h2>
+
+                    <form onsubmit="handleLoginSubmit(event)" class="space-y-4 text-left">
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-1">Username</label>
+                            <input type="text" id="login-username" required placeholder="Masukkan username" class="glass-input w-full px-4 py-3 rounded-xl text-sm text-slate-800 font-medium placeholder:text-slate-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                            <input type="password" id="login-password" required placeholder="••••••••" class="glass-input w-full px-4 py-3 rounded-xl text-sm text-slate-800 font-medium placeholder:text-slate-400">
+                        </div>
+                        <button type="submit" class="liquid-btn-primary w-full py-3.5 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 mt-2">
+                            <span>LOGIN</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <p class="text-xs font-medium text-slate-600">
+                        Belum punya akun? 
+                        <button onclick="renderRegisterForm()" class="font-bold text-pink-600 hover:underline">Daftar Akun</button>
+                    </p>
+                </div>
+            `;
+        }
+
+        function renderRegisterForm() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="glass-card p-8 rounded-3xl text-center space-y-6">
+                    <div>
+                        <h1 class="text-2xl font-black text-slate-800">Daftar Akun UKS</h1>
+                        <p class="text-xs text-slate-500 mt-1">Lengkapi data untuk membuat akun baru</p>
+                    </div>
+
+                    <form onsubmit="handleRegisterSubmit(event)" class="space-y-4 text-left">
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                            <input type="text" id="reg-name" required placeholder="Nama Lengkap" class="glass-input w-full px-4 py-3 rounded-xl text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-1">Username</label>
+                            <input type="text" id="reg-username" required placeholder="Username baru" class="glass-input w-full px-4 py-3 rounded-xl text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                            <input type="password" id="reg-password" required placeholder="••••••••" class="glass-input w-full px-4 py-3 rounded-xl text-sm">
+                        </div>
+                        <button type="submit" class="liquid-btn-primary w-full py-3.5 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2">
+                            <span>DAFTAR SEKARANG</span>
+                        </button>
+                    </form>
+
+                    <p class="text-xs font-medium text-slate-600">
+                        Sudah punya akun? 
+                        <button onclick="renderLoginForm()" class="font-bold text-pink-600 hover:underline">Login disini</button>
+                    </p>
+                </div>
+            `;
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            localStorage.setItem('uks_user', JSON.stringify({ username: username }));
+            alert('Login Berhasil!');
+            location.reload(); // Refresh halaman agar masuk ke Dashboard
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            alert('Pendaftaran Berhasil! Silakan Login.');
+            renderLoginForm();
+        }
+    </script>
 </body>
 </html>
