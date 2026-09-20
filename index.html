@@ -10,8 +10,79 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Custom Style -->
+    
+    <!-- Link CSS Eksternal (Opsional) -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS Embedded Langsung Agar Vercel Pasti Membaca Stylingnya -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 35%, #fbcfe8 70%, #f472b6 100%);
+            background-attachment: fixed;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(25px) saturate(190%);
+            -webkit-backdrop-filter: blur(25px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 50px -10px rgba(219, 39, 119, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .glass-sidebar {
+            background: rgba(255, 241, 245, 0.55);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.15);
+        }
+
+        .liquid-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px -3px rgba(190, 24, 93, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .liquid-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 25px -5px rgba(219, 39, 119, 0.2);
+        }
+
+        .liquid-btn:active, .liquid-btn-danger:active {
+            transform: scale(0.93) translateY(2px) !important;
+        }
+
+        .liquid-btn-danger {
+            background: rgba(255, 228, 230, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .liquid-btn-danger:hover {
+            background: rgba(244, 63, 94, 0.9);
+            color: white;
+            box-shadow: 0 8px 20px -4px rgba(244, 63, 94, 0.4);
+        }
+
+        .liquid-badge {
+            background: linear-gradient(135deg, rgba(244, 114, 182, 0.8) 0%, rgba(190, 24, 93, 0.9) 100%);
+            box-shadow: 0 6px 15px -3px rgba(190, 24, 93, 0.3);
+        }
+
+        .nav-btn-active {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(255, 255, 255, 1) !important;
+            color: #be185d !important;
+            font-weight: 800 !important;
+            box-shadow: 0 10px 25px -5px rgba(190, 24, 93, 0.25) !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen text-slate-800 antialiased selection:bg-pink-400 selection:text-white overflow-x-hidden relative">
 
@@ -37,11 +108,10 @@
         </div>
 
         <!-- Sidebar Navigation (Liquid Glass Style) -->
-        <!-- Ubah class 'hidden md:flex' menjadi bergeser dinamis untuk mobile -->
         <aside id="sidebar-nav" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:flex flex-col w-72 p-6 justify-between min-h-screen z-40 transition-transform duration-300 ease-in-out">
             <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col shadow-2xl md:shadow-none">
                 
-                <!-- Tombol Close khusus Mobile di dalam Sidebar -->
+                <!-- Header Sidebar & Tombol Close Mobile -->
                 <div class="flex items-center justify-between pb-5 border-b border-white/30">
                     <div class="flex items-center gap-3.5">
                         <div class="liquid-badge p-3 text-white rounded-2xl flex items-center justify-center">
@@ -57,9 +127,9 @@
                     </button>
                 </div>
 
-                <!-- Navigasi Utama -->
+                <!-- Navigasi Utama (Kotak-Kotak Pelapis Pink) -->
                 <nav class="space-y-3 flex-1">
-                    <button onclick="navigateTo('dashboard'); toggleMobileSidebar();" id="nav-dashboard" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                    <button onclick="navigateTo('dashboard'); toggleMobileSidebar();" id="nav-dashboard" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700 nav-btn-active">
                         <i class="fa-solid fa-house w-5 text-center text-pink-600"></i>
                         <span>Dashboard</span>
                     </button>
@@ -96,24 +166,26 @@
         </main>
     </div>
 
-    <!-- Notification Toast Modal (iOS Banner Alert) -->
+    <!-- Notification Toast Modal -->
     <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-180%] opacity-0 transition-all duration-500 ease-spring flex items-center gap-3.5 px-6 py-4 rounded-2xl glass-card shadow-2xl pointer-events-none">
         <div id="toast-icon" class="text-2xl"></div>
         <div id="toast-message" class="text-xs font-bold text-slate-800 tracking-wide"></div>
     </div>
 
-    <!-- Script tambahan untuk toggle mobile -->
+    <!-- Script Toggle Mobile -->
     <script>
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar-nav');
             const overlay = document.getElementById('sidebar-overlay');
             
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            }
         }
     </script>
 
-    <!-- Modul JavaScript -->
+    <!-- Modul JavaScript SPA -->
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
