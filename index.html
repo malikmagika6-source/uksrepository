@@ -23,25 +23,25 @@
     <!-- Container Utama SPA -->
     <div id="app" class="min-h-screen flex flex-col md:flex-row relative z-10">
         
-        <!-- Mobile Header & Hamburger Button -->
-        <div class="md:hidden flex items-center justify-between p-4 glass-card border-b border-white/40 sticky top-0 z-30">
+        <!-- HEADER MOBILE KHUSUS HP (Desktop otomatis tersembunyi dengan md:hidden) -->
+        <header class="md:hidden flex items-center justify-between p-4 glass-card border-b border-white/40 sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <div class="liquid-badge p-2.5 text-white rounded-xl flex items-center justify-center">
                     <i class="fa-solid fa-heart-pulse text-lg"></i>
                 </div>
                 <h1 class="font-black text-lg tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
             </div>
-            <button onclick="toggleMobileSidebar()" class="liquid-btn p-3 rounded-2xl text-pink-600 text-lg">
-                <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+            <!-- Tombol Hamburger -->
+            <button onclick="toggleMobileSidebar()" class="liquid-btn p-3 rounded-2xl text-pink-600 text-lg focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
             </button>
-        </div>
+        </header>
 
-        <!-- Sidebar Navigation (Liquid Glass Style) -->
-        <!-- Ubah class 'hidden md:flex' menjadi bergeser dinamis untuk mobile -->
+        <!-- Sidebar Navigation (Kembali menggunakan struktur asli + tambahan class mobile sliding) -->
         <aside id="sidebar-nav" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:flex flex-col w-72 p-6 justify-between min-h-screen z-40 transition-transform duration-300 ease-in-out">
-            <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col shadow-2xl md:shadow-none">
+            <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col shadow-2xl md:shadow-none h-full overflow-y-auto">
                 
-                <!-- Tombol Close khusus Mobile di dalam Sidebar -->
+                <!-- Logo UKS -->
                 <div class="flex items-center justify-between pb-5 border-b border-white/30">
                     <div class="flex items-center gap-3.5">
                         <div class="liquid-badge p-3 text-white rounded-2xl flex items-center justify-center">
@@ -52,7 +52,8 @@
                             <p class="text-[10px] text-pink-700/80 font-bold uppercase tracking-widest">Monitoring System</p>
                         </div>
                     </div>
-                    <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-500 hover:text-pink-600">
+                    <!-- Tombol Silang (Close) Khusus di dalam Sidebar Mobile -->
+                    <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-500 hover:text-pink-600 p-2">
                         <i class="fa-solid fa-xmark text-xl"></i>
                     </button>
                 </div>
@@ -87,10 +88,10 @@
             </div>
         </aside>
 
-        <!-- Overlay Gelap saat Sidebar Mobile Terbuka -->
-        <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 hidden md:hidden"></div>
+        <!-- Backdrop/Overlay Gelap Ketika Sidebar Mobile Terbuka -->
+        <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 hidden md:hidden transition-opacity"></div>
 
-        <!-- Area Konten Utama -->
+        <!-- Area Konten Utama (ID Tetap Utuh untuk JavaScript SPA Anda) -->
         <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto min-h-screen flex flex-col justify-between">
             <div id="page-container" class="max-w-7xl mx-auto w-full"></div>
         </main>
@@ -102,18 +103,19 @@
         <div id="toast-message" class="text-xs font-bold text-slate-800 tracking-wide"></div>
     </div>
 
-    <!-- Script tambahan untuk toggle mobile -->
+    <!-- Fungsi Toggle Mobile Sidebar -->
     <script>
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar-nav');
             const overlay = document.getElementById('sidebar-overlay');
-            
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            }
         }
     </script>
 
-    <!-- Modul JavaScript -->
+    <!-- Modul JavaScript Anda -->
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
