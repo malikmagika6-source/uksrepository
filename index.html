@@ -3,610 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoring UKS</title>
+    <title>Sistem Monitoring UKS - Liquid Glass iOS</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 35%, #fbcfe8 70%, #f472b6 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            color: #1e293b;
-            overflow-x: hidden;
-        }
-
-        .blob-1 {
-            position: fixed;
-            top: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(244, 114, 182, 0.35);
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .blob-2 {
-            position: fixed;
-            bottom: -10%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(251, 113, 133, 0.25);
-            border-radius: 50%;
-            filter: blur(140px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(25px) saturate(190%);
-            -webkit-backdrop-filter: blur(25px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 20px 40px -15px rgba(219, 39, 119, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
-            border-radius: 24px;
-            padding: 24px;
-        }
-
-        .glass-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(244, 114, 182, 0.35);
-            border-radius: 14px;
-            font-size: 14px;
-            color: #1e293b;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .glass-input:focus {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: #db2777;
-            box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15);
-        }
-
-        .liquid-btn-primary {
-            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 8px 20px -4px rgba(190, 24, 93, 0.3);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .liquid-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px -4px rgba(190, 24, 93, 0.4);
-        }
-
-        /* App Main Layout */
-        #app-layout {
-            display: flex;
-            flex-direction: row;
-            min-height: 100vh;
-            position: relative;
-            z-index: 10;
-            width: 100%;
-        }
-
-        .glass-sidebar {
-            background: rgba(255, 241, 245, 0.65);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.15);
-            border-radius: 28px;
-            padding: 24px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        #sidebar-nav {
-            width: 280px;
-            padding: 20px;
-            flex-shrink: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-            z-index: 40;
-        }
-
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .liquid-badge {
-            background: linear-gradient(135deg, #f472b6 0%, #be185d 100%);
-            box-shadow: 0 6px 15px -3px rgba(190, 24, 93, 0.3);
-            padding: 10px 12px;
-            color: white;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .brand-title {
-            font-size: 18px;
-            font-weight: 900;
-            color: #1e293b;
-        }
-
-        .brand-title span { color: #db2777; }
-
-        .brand-sub {
-            font-size: 9px;
-            color: #be185d;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex-grow: 1;
-        }
-
-        .liquid-btn {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 12px rgba(190, 24, 93, 0.05);
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #334155;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            width: 100%;
-            transition: all 0.2s ease;
-            text-align: left;
-        }
-
-        .liquid-btn i { color: #db2777; width: 20px; text-align: center; }
-
-        .liquid-btn:hover, .nav-btn-active {
-            background: rgba(255, 255, 255, 0.95) !important;
-            color: #be185d !important;
-            font-weight: 800 !important;
-            box-shadow: 0 8px 20px -4px rgba(190, 24, 93, 0.2) !important;
-        }
-
-        .liquid-btn-danger {
-            background: rgba(255, 228, 230, 0.7);
-            border: 1px solid rgba(244, 63, 94, 0.3);
-            color: #be123c;
-            font-weight: 700;
-            padding: 12px;
-            border-radius: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        #main-content {
-            flex-grow: 1;
-            padding: 24px;
-            width: 100%;
-        }
-
-        .mobile-header {
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 30;
-            border-radius: 0 0 20px 20px;
-        }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(4px);
-            z-index: 30;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: rgba(219, 39, 119, 0.15);
-            color: #be185d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        @media (max-width: 768px) {
-            #app-layout { flex-direction: column; }
-            .mobile-header { display: flex; }
-            #sidebar-nav {
-                position: fixed;
-                top: 0; left: 0; bottom: 0;
-                transform: translateX(-100%);
-                background: rgba(253, 242, 248, 0.95);
-            }
-            #sidebar-nav.active { transform: translateX(0); }
-            .sidebar-overlay.active { display: block; }
-            #main-content { padding: 16px; }
-        }
-    </style>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="font-sans min-h-screen text-slate-800 antialiased selection:bg-pink-400 selection:text-white overflow-x-hidden relative">
 
-    <div class="blob-1"></div>
-    <div class="blob-2"></div>
+    <!-- Ambient Glowing Blobs untuk Efek Pembiasan Kaca -->
+    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-400/40 rounded-full blur-[130px] pointer-events-none animate-pulse"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-rose-400/30 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="fixed top-[40%] right-[20%] w-[350px] h-[350px] bg-fuchsia-300/30 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <!-- Container Utama Aplikasi (Auth atau Dashboard) -->
-    <div id="root"></div>
-
-    <!-- Modul JavaScript External (bila ada) -->
-    <script src="js/data.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/app.js"></script>
-
-    <!-- SPA Auth & Dashboard Navigation Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuthAndRender();
-        });
-
-        function checkAuthAndRender() {
-            const user = localStorage.getItem('uks_user');
-            if (user) {
-                renderDashboardLayout();
-            } else {
-                renderLoginForm();
-            }
-        }
-
-        // --- RENDER FORM LOGIN ---
-        function renderLoginForm() {
-            const root = document.getElementById('root');
-            root.className = "min-h-screen flex items-center justify-center p-4 relative z-10";
-            root.innerHTML = `
-                <div style="width: 100%; max-width: 400px; margin: 40px auto;">
-                    <div class="glass-card" style="text-align: center;">
-                        <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-                            <div class="liquid-badge" style="width: 60px; height: 60px; font-size: 28px;">
-                                <i class="fa-solid fa-heart-pulse"></i>
-                            </div>
-                        </div>
-                        
-                        <h1 class="brand-title" style="font-size: 24px;">UKS <span>Plus</span></h1>
-                        <p class="brand-sub" style="margin-top: 4px; margin-bottom: 2px;">SISTEM MONITORING UKS</p>
-                        <p style="font-size: 12px; color: #64748b; font-style: italic; margin-bottom: 24px;">Sehat Bersama, Prestasi Juara</p>
-
-                        <h2 style="font-size: 16px; font-weight: 700; color: #334155; margin-bottom: 16px; text-align: left;">Masuk ke Akun Anda</h2>
-
-                        <form onsubmit="handleLoginSubmit(event)" style="text-align: left; display: flex; flex-direction: column; gap: 14px;">
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px;">Username</label>
-                                <input type="text" id="login-username" required placeholder="Masukkan username" class="glass-input">
-                            </div>
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px;">Password</label>
-                                <input type="password" id="login-password" required placeholder="••••••••" class="glass-input">
-                            </div>
-                            <button type="submit" class="liquid-btn-primary" style="margin-top: 8px;">
-                                <span>LOGIN</span>
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </form>
-
-                        <p style="font-size: 12px; color: #64748b; margin-top: 20px;">
-                            Belum punya akun? 
-                            <button onclick="renderRegisterForm()" style="background: none; border: none; font-weight: 800; color: #be185d; cursor: pointer; text-decoration: underline;">Daftar Akun</button>
-                        </p>
-                    </div>
+    <!-- Container Utama SPA -->
+    <div id="app" class="min-h-screen flex flex-col md:flex-row relative z-10">
+        
+        <!-- Mobile Header & Hamburger Button -->
+        <div class="md:hidden flex items-center justify-between p-4 glass-card border-b border-white/40 sticky top-0 z-30">
+            <div class="flex items-center gap-3">
+                <div class="liquid-badge p-2.5 text-white rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-heart-pulse text-lg"></i>
                 </div>
-            `;
-        }
+                <h1 class="font-black text-lg tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
+            </div>
+            <button onclick="toggleMobileSidebar()" class="liquid-btn p-3 rounded-2xl text-pink-600 text-lg">
+                <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+            </button>
+        </div>
 
-        // --- RENDER FORM REGISTER ---
-        function renderRegisterForm() {
-            const root = document.getElementById('root');
-            root.innerHTML = `
-                <div style="width: 100%; max-width: 400px; margin: 40px auto;">
-                    <div class="glass-card" style="text-align: center;">
-                        <h1 class="brand-title" style="font-size: 22px; margin-bottom: 4px;">Daftar Akun UKS</h1>
-                        <p style="font-size: 12px; color: #64748b; margin-bottom: 20px;">Lengkapi data untuk membuat akun baru</p>
-
-                        <form onsubmit="handleRegisterSubmit(event)" style="text-align: left; display: flex; flex-direction: column; gap: 14px;">
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px;">Nama Lengkap</label>
-                                <input type="text" id="reg-name" required placeholder="Nama Lengkap" class="glass-input">
-                            </div>
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px;">Username</label>
-                                <input type="text" id="reg-username" required placeholder="Username baru" class="glass-input">
-                            </div>
-                            <div>
-                                <label style="display: block; font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 6px;">Password</label>
-                                <input type="password" id="reg-password" required placeholder="••••••••" class="glass-input">
-                            </div>
-                            <button type="submit" class="liquid-btn-primary" style="margin-top: 8px;">
-                                <span>DAFTAR SEKARANG</span>
-                            </button>
-                        </form>
-
-                        <p style="font-size: 12px; color: #64748b; margin-top: 20px;">
-                            Sudah punya akun? 
-                            <button onclick="renderLoginForm()" style="background: none; border: none; font-weight: 800; color: #be185d; cursor: pointer; text-decoration: underline;">Login disini</button>
-                        </p>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- RENDER DOKUMEN LAYOUT DASHBOARD ---
-        function renderDashboardLayout() {
-            const root = document.getElementById('root');
-            root.className = "";
-            root.innerHTML = `
-                <!-- Mobile Header -->
-                <div class="mobile-header glass-card">
-                    <div class="brand-wrapper">
-                        <div class="liquid-badge">
-                            <i class="fa-solid fa-heart-pulse"></i>
+        <!-- Sidebar Navigation (Liquid Glass Style) -->
+        <!-- Ubah class 'hidden md:flex' menjadi bergeser dinamis untuk mobile -->
+        <aside id="sidebar-nav" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:flex flex-col w-72 p-6 justify-between min-h-screen z-40 transition-transform duration-300 ease-in-out">
+            <div class="glass-sidebar p-6 rounded-3xl space-y-8 flex-1 flex flex-col shadow-2xl md:shadow-none">
+                
+                <!-- Tombol Close khusus Mobile di dalam Sidebar -->
+                <div class="flex items-center justify-between pb-5 border-b border-white/30">
+                    <div class="flex items-center gap-3.5">
+                        <div class="liquid-badge p-3 text-white rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-heart-pulse text-2xl"></i>
                         </div>
-                        <h1 class="brand-title">UKS <span>Plus</span></h1>
+                        <div>
+                            <h1 class="font-black text-xl tracking-tight text-slate-800">UKS <span class="text-pink-600 font-extrabold">Plus</span></h1>
+                            <p class="text-[10px] text-pink-700/80 font-bold uppercase tracking-widest">Monitoring System</p>
+                        </div>
                     </div>
-                    <button onclick="toggleMobileSidebar()" class="liquid-btn" style="width: auto; padding: 10px 14px;">
-                        <i class="fa-solid fa-bars" style="font-size: 18px;"></i>
+                    <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-500 hover:text-pink-600">
+                        <i class="fa-solid fa-xmark text-xl"></i>
                     </button>
                 </div>
 
-                <div id="app-layout">
-                    <!-- Sidebar Navigation -->
-                    <aside id="sidebar-nav">
-                        <div class="glass-sidebar">
-                            <div>
-                                <div class="sidebar-header">
-                                    <div class="brand-wrapper">
-                                        <div class="liquid-badge">
-                                            <i class="fa-solid fa-heart-pulse" style="font-size: 20px;"></i>
-                                        </div>
-                                        <div>
-                                            <h1 class="brand-title">UKS <span>Plus</span></h1>
-                                            <p class="brand-sub">MONITORING SYSTEM</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Navigasi Utama -->
+                <nav class="space-y-3 flex-1">
+                    <button onclick="navigateTo('dashboard'); toggleMobileSidebar();" id="nav-dashboard" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-house w-5 text-center text-pink-600"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="navigateTo('form-rekam-medis'); toggleMobileSidebar();" id="nav-form-rekam-medis" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-file-medical w-5 text-center text-pink-600"></i>
+                        <span>Rekam Medis</span>
+                    </button>
+                    <button onclick="navigateTo('stok-obat'); toggleMobileSidebar();" id="nav-stok-obat" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-pills w-5 text-center text-pink-600"></i>
+                        <span>Data Obat</span>
+                    </button>
+                    <button onclick="navigateTo('riwayat-kesehatan'); toggleMobileSidebar();" id="nav-riwayat-kesehatan" class="liquid-btn nav-btn w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold text-slate-700">
+                        <i class="fa-solid fa-notes-medical w-5 text-center text-pink-600"></i>
+                        <span>Riwayat Kesehatan</span>
+                    </button>
+                </nav>
 
-                                <nav class="sidebar-menu">
-                                    <button onclick="setActiveNav(this); renderPageDashboard();" class="liquid-btn nav-btn-active">
-                                        <i class="fa-solid fa-house"></i>
-                                        <span>Dashboard</span>
-                                    </button>
-                                    <button onclick="setActiveNav(this); renderPageRekamMedis();" class="liquid-btn">
-                                        <i class="fa-solid fa-file-medical"></i>
-                                        <span>Rekam Medis</span>
-                                    </button>
-                                    <button onclick="setActiveNav(this); renderPageDataObat();" class="liquid-btn">
-                                        <i class="fa-solid fa-pills"></i>
-                                        <span>Data Obat</span>
-                                    </button>
-                                    <button onclick="setActiveNav(this); renderPageRiwayat();" class="liquid-btn">
-                                        <i class="fa-solid fa-notes-medical"></i>
-                                        <span>Riwayat Kesehatan</span>
-                                    </button>
-                                </nav>
-                            </div>
-
-                            <div style="padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.4);">
-                                <button onclick="handleLogout()" class="liquid-btn-danger">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    <span>Logout</span>
-                                </button>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="sidebar-overlay"></div>
-
-                    <!-- Area Konten Utama -->
-                    <main id="main-content">
-                        <div id="page-container">
-                            <!-- Halaman Dashboard di-load otomatis -->
-                        </div>
-                    </main>
+                <!-- Tombol Logout -->
+                <div class="pt-4 border-t border-white/30">
+                    <button onclick="handleLogout()" class="liquid-btn-danger w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-bold text-rose-700">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
                 </div>
-            `;
+            </div>
+        </aside>
 
-            renderPageDashboard();
-        }
+        <!-- Overlay Gelap saat Sidebar Mobile Terbuka -->
+        <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 hidden md:hidden"></div>
 
-        // --- SUB-PAGES RENDERER ---
-        function setActiveNav(btn) {
-            document.querySelectorAll('.sidebar-menu .liquid-btn').forEach(b => b.classList.remove('nav-btn-active'));
-            btn.classList.add('nav-btn-active');
-            const sidebar = document.getElementById('sidebar-nav');
-            const overlay = document.getElementById('sidebar-overlay');
-            if (sidebar && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        }
+        <!-- Area Konten Utama -->
+        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto min-h-screen flex flex-col justify-between">
+            <div id="page-container" class="max-w-7xl mx-auto w-full"></div>
+        </main>
+    </div>
 
-        function renderPageDashboard() {
-            document.getElementById('page-container').innerHTML = `
-                <div style="margin-bottom: 24px;">
-                    <h2 style="font-size: 22px; font-weight: 800; color: #1e293b;">Dashboard Monitoring</h2>
-                    <p style="font-size: 13px; color: #be185d;">Ringkasan aktivitas kesehatan UKS hari ini</p>
-                </div>
+    <!-- Notification Toast Modal (iOS Banner Alert) -->
+    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-180%] opacity-0 transition-all duration-500 ease-spring flex items-center gap-3.5 px-6 py-4 rounded-2xl glass-card shadow-2xl pointer-events-none">
+        <div id="toast-icon" class="text-2xl"></div>
+        <div id="toast-message" class="text-xs font-bold text-slate-800 tracking-wide"></div>
+    </div>
 
-                <div class="stats-grid">
-                    <div class="glass-card stat-card">
-                        <div class="stat-icon"><i class="fa-solid fa-user-injured"></i></div>
-                        <div>
-                            <p style="font-size: 12px; color: #64748b; font-weight:600;">Siswa Berobat</p>
-                            <h3 style="font-size: 20px; font-weight: 800; color: #be185d;">12 Siswa</h3>
-                        </div>
-                    </div>
-                    <div class="glass-card stat-card">
-                        <div class="stat-icon"><i class="fa-solid fa-pills"></i></div>
-                        <div>
-                            <p style="font-size: 12px; color: #64748b; font-weight:600;">Stok Obat</p>
-                            <h3 style="font-size: 20px; font-weight: 800; color: #be185d;">45 Item</h3>
-                        </div>
-                    </div>
-                    <div class="glass-card stat-card">
-                        <div class="stat-icon"><i class="fa-solid fa-bed"></i></div>
-                        <div>
-                            <p style="font-size: 12px; color: #64748b; font-weight:600;">Kasur Terpakai</p>
-                            <h3 style="font-size: 20px; font-weight: 800; color: #be185d;">2 / 4</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card">
-                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e293b;">Pasien Terbaru Hari Ini</h3>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
-                            <thead>
-                                <tr style="border-bottom: 2px solid rgba(255,255,255,0.6); color: #be185d;">
-                                    <th style="padding: 10px;">Nama</th>
-                                    <th style="padding: 10px;">Kelas</th>
-                                    <th style="padding: 10px;">Keluhan</th>
-                                    <th style="padding: 10px;">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.4);">
-                                    <td style="padding: 10px; font-weight: 600;">Ahmad Rizky</td>
-                                    <td style="padding: 10px;">XI RPL 2</td>
-                                    <td style="padding: 10px;">Pusing / Demam</td>
-                                    <td style="padding: 10px;"><span style="background: #fce7f3; color: #be185d; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Istirahat</span></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; font-weight: 600;">Siti Nurhaliza</td>
-                                    <td style="padding: 10px;">X AKL 1</td>
-                                    <td style="padding: 10px;">Sakit Maag</td>
-                                    <td style="padding: 10px;"><span style="background: #dcfce7; color: #15803d; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Kembali ke Kelas</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderPageRekamMedis() {
-            document.getElementById('page-container').innerHTML = `
-                <div class="glass-card">
-                    <h2 style="font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Form Rekam Medis</h2>
-                    <p style="font-size: 13px; color: #be185d;">Input dan catat data pemeriksaan medis siswa secara real-time.</p>
-                </div>
-            `;
-        }
-
-        function renderPageDataObat() {
-            document.getElementById('page-container').innerHTML = `
-                <div class="glass-card">
-                    <h2 style="font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Inventaris Data Obat</h2>
-                    <p style="font-size: 13px; color: #be185d;">Kelola stok obat-obatan dan P3K UKS sekolah.</p>
-                </div>
-            `;
-        }
-
-        function renderPageRiwayat() {
-            document.getElementById('page-container').innerHTML = `
-                <div class="glass-card">
-                    <h2 style="font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Riwayat Kesehatan</h2>
-                    <p style="font-size: 13px; color: #be185d;">Arsip dan catatan riwayat berobat seluruh siswa.</p>
-                </div>
-            `;
-        }
-
-        // --- HANDLERS ---
-        function handleLoginSubmit(e) {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            localStorage.setItem('uks_user', JSON.stringify({ username: username }));
-            renderDashboardLayout(); // Langsung ganti tampilan ke Dashboard tanpa refresh
-        }
-
-        function handleRegisterSubmit(e) {
-            e.preventDefault();
-            alert('Pendaftaran Berhasil! Silakan Login.');
-            renderLoginForm();
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('uks_user');
-            renderLoginForm();
-        }
-
+    <!-- Script tambahan untuk toggle mobile -->
+    <script>
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar-nav');
             const overlay = document.getElementById('sidebar-overlay');
-            if (sidebar && overlay) {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-            }
+            
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
         }
     </script>
+
+    <!-- Modul JavaScript -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
